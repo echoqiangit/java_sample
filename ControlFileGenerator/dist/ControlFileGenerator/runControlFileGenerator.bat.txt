@@ -1,0 +1,5 @@
+@ECHO OFF
+set CLASSPATH=.
+set CLASSPATH=%CLASSPATH%;lib/generator.jar;lib/log4j-api-2.11.0.jar;lib/log4j-core-2.11.0.jar;lib/slf4j-api-1.7.25.jar;lib/HikariCP-3.2.0.jar;lib/ojdbc6-11.2.0.jar;lib/spring-context-5.0.2.RELEASE.jar;lib/spring-jdbc-5.0.2.RELEASE.jar;lib/slf4j-api-1.7.25.jar;lib/spring-aop-5.0.2.RELEASE.jar;lib/spring-beans-5.0.2.RELEASE.jar;lib/spring-core-5.0.2.RELEASE.jar;lib/spring-expression-5.0.2.RELEASE.jar;lib/spring-jcl-5.0.2.RELEASE.jar;lib/spring-tx-5.0.2.RELEASE.jar
+
+start javaw -Xms128m -Xmx384m -Xnoclassgc com.sample.controlfilegenerator.ControlFileGeneratorJFrame
