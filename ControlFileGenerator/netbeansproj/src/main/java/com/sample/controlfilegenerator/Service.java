@@ -12,8 +12,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import sun.misc.BASE64Decoder;
-
+import java.util.Base64;
 public class Service {
 
     private static Logger logger = LogManager.getLogger(Service.class);
@@ -126,4 +125,12 @@ public class Service {
         }
     }
     
+        
+        public static void main(String[] args){
+        String clearText = "mybase64 is simple";
+        String encodedText = Base64.getEncoder().withoutPadding().encodeToString(clearText.getBytes());
+        System.out.println("encoded text: " + encodedText);
+        String decodedText = new String(Base64.getDecoder().decode(encodedText));
+        System.out.println("decoded text: " + decodedText);
+    }
 }

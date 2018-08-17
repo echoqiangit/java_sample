@@ -3,11 +3,12 @@ package com.sample.controlfilegenerator;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import java.io.IOException;
+import java.util.Base64;
 import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
-import sun.misc.BASE64Decoder;
+import java.util.Base64;
 
 @Configuration
 public class SpringConfiguration {
@@ -80,14 +81,8 @@ public class SpringConfiguration {
     }
 
     private String decode(String password) {
-        BASE64Decoder decoder = new BASE64Decoder();
-        String decodedPassword = null;
-        try {
-            decodedPassword = new String(decoder.decodeBuffer(password));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return decodedPassword;
-    }
+ 
+        return new String(Base64.getDecoder().decode(password));
+     }
 
 }
