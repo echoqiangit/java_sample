@@ -107,22 +107,23 @@ public class Service {
         return duplicatedList;
     }
 
-    public String getCaseNumberFromFileName(String fileName, String startsWith) {
+        public String getMemberIdFromFileName(String fileName, String startsWith) {
         String caseNumber = null;
         int beginning = startsWith.length();
 
-        if (fileName.charAt(beginning + 8) == '_' || fileName.charAt(beginning + 8) == '-' || fileName.charAt(beginning + 8) == '.' || fileName.charAt(beginning + 8) == ' ') {
-            caseNumber = fileName.substring(beginning, beginning + 8);
-        } else if (fileName.charAt(beginning + 7) == '_' || fileName.charAt(beginning + 7) == '-' || fileName.charAt(beginning + 7) == '.' || fileName.charAt(beginning + 7) == ' ') {
-            caseNumber = fileName.substring(beginning, beginning + 7);
-        } else if (fileName.charAt(beginning + 6) == '_' || fileName.charAt(beginning + 6) == '-' || fileName.charAt(beginning + 6) == '.' || fileName.charAt(beginning + 6) == ' ') {
-            caseNumber = fileName.substring(beginning, beginning + 6);
-        } else if (fileName.charAt(beginning + 9) == '_' || fileName.charAt(beginning + 9) == '-' || fileName.charAt(beginning + 9) == '.' || fileName.charAt(beginning + 9) == ' ') {
-            caseNumber = fileName.substring(beginning, beginning + 9);
+        if(fileName.startsWith(startsWith)) {
+            String subFileName = fileName.substring(startsWith.length());
+            int endIndex = 0;
+            for (int i = 0; i < subFileName.toCharArray().length; i++) {
+                if (!Character.isDigit(subFileName.toCharArray()[i])) {
+                    endIndex = i;
+                    break;
+                }
+            }
+           return subFileName.substring(0, endIndex);
+        }else{
+            return "invalid file name";
         }
-
-        return caseNumber;
     }
-    
     
 }

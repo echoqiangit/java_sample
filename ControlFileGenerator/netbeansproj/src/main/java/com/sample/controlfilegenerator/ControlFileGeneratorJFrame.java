@@ -397,7 +397,7 @@ Thread.sleep(5000);
             for (int i = 0; i < all_file_names.length; i++) {
                 String fileName = all_file_names[i];
                 if (fileName.startsWith(fileNameStartsStr) && fileName.length() >= (fileNameStartsStr.length() + 9)) {
-                    String memberId = service.getCaseNumberFromFileName(fileName, fileNameStartsStr);
+                    String memberId = service.getMemberIdFromFileName(fileName, fileNameStartsStr);
                     allItemTypeList.add(new ItemType(memberId, fileName));
                 } else {
                     invalidFileNameSet.add(fileName);
