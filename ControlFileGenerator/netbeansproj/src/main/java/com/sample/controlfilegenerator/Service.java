@@ -13,14 +13,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import java.util.Base64;
+
 public class Service {
 
     private static Logger logger = LogManager.getLogger(Service.class);
     private AppDAO appDAO = null;
 
     public Service() {
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfiguration.class);
-        appDAO = applicationContext.getBean("appDAO", AppDAO.class);
+        //AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfiguration.class);
+        //appDAO = applicationContext.getBean("appDAO", AppDAO.class);
     }
 
     public int generateControlFiles(int size, List<ItemType> caseList, String folder) throws IOException {
@@ -32,15 +33,14 @@ public class Service {
         for (int i = 0; i < numberOfGroup; i++) {
             List<ItemType> subList = null;
             //last loop
-            if(i==numberOfGroup-1){
+            if (i == numberOfGroup - 1) {
                 subList = caseList.subList(i * size, caseList.size());
-            }else{
+            } else {
                 subList = caseList.subList(i * size, i * size + size);
             }
             writeListToControlFile(folder + "\\control_group" + (i + 1) + ".txt", subList);
         }
 
-        
         return numberOfGroup;
     }
 
@@ -74,28 +74,27 @@ public class Service {
 
     public void writeSetToFile(String filename, Set<ItemType> itSet) throws IOException {
         StringBuffer sb = new StringBuffer();
-        for (ItemType it: itSet){
-            sb.append(it.toString()+"\n");
+        for (ItemType it : itSet) {
+            sb.append(it.toString() + "\n");
         }
         Files.write(Paths.get(filename), sb.toString().getBytes());
     }
 
     public void writeStringSetToFile(String filename, Set<String> strSet) throws IOException {
-          Files.write(Paths.get(filename), strSet);
-      /*
+        Files.write(Paths.get(filename), strSet);
+        /*
         StringBuffer sb = new StringBuffer();
         for (String str: strSet){
             sb.append(str+"\n");
         }
         Files.write(Paths.get(filename), sb.toString().getBytes());
-*/
+         */
     }
 
-    
     public void writeListToFile(String filename, List<ItemType> itList) throws IOException {
         StringBuffer sb = new StringBuffer();
-        for (ItemType it: itList){
-            sb.append(it.toString()+"\n");
+        for (ItemType it : itList) {
+            sb.append(it.toString() + "\n");
         }
         Files.write(Paths.get(filename), sb.toString().getBytes());
     }
@@ -106,11 +105,23 @@ public class Service {
         return duplicatedList;
     }
 
-        public String getMemberIdFromFileName(String fileName, String startsWith) {
+    public String getMemberIdFromFileName(String fileName, String startsWith) {
+        String memberId = null;
+        if (fileName != null && fileName.startsWith(startsWith) && fileName.length() >= (startsWith.length() + 8 + 4)) {
+            String id = fileName.substring(startsWith.length(), startsWith.length() + 8);
+            try {
+                int i = Integer.parseInt(id);
+                memberId = id;
+            } catch (NumberFormatException e) {
+            }
+        }
+        return memberId;
+
+        /*
         String caseNumber = null;
         int beginning = startsWith.length();
-
-        if(fileName.startsWith(startsWith)) {
+ 
+        if (fileName.startsWith(startsWith)) {
             String subFileName = fileName.substring(startsWith.length());
             int endIndex = 0;
             for (int i = 0; i < subFileName.toCharArray().length; i++) {
@@ -119,14 +130,15 @@ public class Service {
                     break;
                 }
             }
-           return subFileName.substring(0, endIndex);
-        }else{
+            return subFileName.substring(0, endIndex);
+        } else {
             return "invalid file name";
         }
+         */
     }
-    
-        
-        public static void main(String[] args){
+
+    public static void main(String[] args) {
+
         String clearText = "mybase64 is simple";
         String encodedText = Base64.getEncoder().withoutPadding().encodeToString(clearText.getBytes());
         System.out.println("encoded text: " + encodedText);

@@ -63,8 +63,9 @@ public class ControlFileGeneratorJFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Control File Generator");
 
-        jLabel1.setText("File Name Prefix:");
+        jLabel1.setText("Document Type：");
 
+        fileNameStartComboBox.setEditable(true);
         fileNameStartComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cut_Sheet_", "Item 2", "Item 3", "Item 4" }));
 
         jLabel2.setText("Folder of Input Files (PDF files): ");
@@ -165,10 +166,10 @@ public class ControlFileGeneratorJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
                     .addComponent(fileNameStartComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(envComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(envComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -396,8 +397,8 @@ Thread.sleep(5000);
             Set<String> invalidFileNameSet = new HashSet();
             for (int i = 0; i < all_file_names.length; i++) {
                 String fileName = all_file_names[i];
-                if (fileName.startsWith(fileNameStartsStr) && fileName.length() >= (fileNameStartsStr.length() + 9)) {
-                    String memberId = service.getMemberIdFromFileName(fileName, fileNameStartsStr);
+                String memberId = service.getMemberIdFromFileName(fileName, fileNameStartsStr);
+                if (fileName != null && memberId != null) {
                     allItemTypeList.add(new ItemType(memberId, fileName));
                 } else {
                     invalidFileNameSet.add(fileName);
